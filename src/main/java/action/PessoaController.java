@@ -52,6 +52,7 @@ public class PessoaController implements Serializable{
 	public void salvar() {
 
 		try{
+//                    if(!pessoa.getSenha().equals("")){
 //			rep.beginTransaction();
 			
 			rep.save(pessoa);
@@ -60,7 +61,7 @@ public class PessoaController implements Serializable{
 			
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
-		
+//                    }
 		}catch(Exception e){
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deu erro", "Deu erro em tudo!"));

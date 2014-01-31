@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+    	<title>Teste 2</title>
+    </h:head>
+    
+    <h:body>
+    	<p:panel header="Cadastro de Pessoas" footer="Rodapé">
+    	
+	    	<h:form id="formulario" >
+	    	
+	    		<p:growl id="mensagem" showDetail="true" />
+	    		
+	    		<p:messages id="mensagem2" showDetail="true"/>
+
+	
+			    <h:panelGrid columns="3" id="painel-formulario">
+			        
+			            Nome
+			            <h:inputText id="nome" value="#{mbPessoa.pessoa.nome}" required="true" requiredMessage="Campo obrigatório"/>
+			        	<p:message for="nome" />
+			        
+			            Email
+			            <h:inputText id="email" value="#{mbPessoa.pessoa.email}" required="true" />
+			       		<p:message for="email" />
+			        
+			            Usuário
+			            <h:inputText id="usuario" value="#{mbPessoa.pessoa.usuario}" required="true" >
+			            	<f:validateLength minimum="4" />
+			            </h:inputText>
+			            <p:message for="usuario" />
+			        
+			        
+			            Senha
+			            <h:inputSecret id="senha" value="#{mbPessoa.pessoa.senha}" required="true">
+			            	<f:validateLength minimum="5" />
+			            </h:inputSecret>
+			            <p:message for="senha" />
+			        
+			        
+			            <h:outputLabel value="" />
+			            <h:outputLabel value="" />
+                                    <p:commandButton value="Salvar" action="#{mbPessoa.salvar()}" process="@form"
+		            		update=":lista-pessoas mensagem mensagem2 painel-formulario" />
+			            
+			        
+			    </h:panelGrid>
+	
+	    	</h:form>
+    	</p:panel>
+
+	
+    	
+    	<p:panel header="Pessoas Cadastradas" >
+	    	<p:dataTable var="pess" value="#{mbPessoa.pessoas }" id="lista-pessoas">
+	    	
+	    		<p:column headerText="Nome">
+	    			<h:outputText value="#{pess.nome}" />
+	    		</p:column>
+	    		
+	    		<p:column headerText="Email">
+	    			<h:outputText value="#{pess.email}" />
+	    		</p:column>
+	    		
+	    		<p:column headerText="Usuario">
+	    			<h:outputText value="#{pess.usuario}" />
+	    		</p:column>
+	    	</p:dataTable>
+    	</p:panel>
+
+
+    </h:body>
+
+</html>

@@ -18,6 +18,11 @@
     <url-pattern>*.mv</url-pattern>
   </servlet-mapping>
   
+    <context-param>
+	<param-name>primefaces.THEME</param-name>
+	<param-value>bootstrap</param-value>
+    </context-param>
+  
   <security-constraint>
       <web-resource-collection>
           <web-resource-name>XHTML</web-resource-name>

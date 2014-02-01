@@ -1,5 +1,6 @@
-package action;
+package controller;
 
+import action.PessoaAction;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,22 +12,18 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import jpa.PessoaRepositorio;
-import jpa.PessoaRepositorioImpl;
+
 import model.Pessoa;
 
 @ManagedBean(name = "mbPessoa")
 @ViewScoped
 public class PessoaController implements Serializable{
 	
-/*	Session session = HibernateUtil.getSession();
-	DaoFactory fac = new DaoFactory(session);
-	
-	Dao<Pessoa> dao = fac.getPessoaDao();*/
 	
 	@EJB
 	private PessoaRepositorio rep;
 	
-
+        private PessoaAction action = new PessoaAction(rep);
 	private Pessoa pessoa;
         
 	
@@ -49,32 +46,22 @@ public class PessoaController implements Serializable{
 	}
 
 	
-	public void salvar() {
+    public void salvar() {
+        if (action.salvar(pessoa)) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
 
-		try{
-//                    if(!pessoa.getSenha().equals("")){
-//			rep.beginTransaction();
-			
-			rep.save(pessoa);
-			
-//			fac.commit();
-			
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
-//                    }
-		}catch(Exception e){
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deu erro", "Deu erro em tudo!"));
-		}
-		
-		
-		pessoa = new Pessoa();
+            pessoa = new Pessoa();
+        
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+		new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deu erro", "Deu erro em tudo!"));
+        }
 
-	}
+    }
 	
 	public List<Pessoa> getPessoas() {
 
-		
 		return rep.findAll();
 	}
 

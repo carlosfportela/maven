@@ -1,6 +1,5 @@
 package controller;
 
-import action.PessoaAction;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,57 +11,74 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import jpa.PessoaRepositorio;
+import lombok.Getter;
+import lombok.Setter;
 
 import model.Pessoa;
 
 @ManagedBean(name = "mbPessoa")
 @ViewScoped
-public class PessoaController implements Serializable{
-	
-	
-	@EJB
-	private PessoaRepositorio rep;
-	
-        private PessoaAction action = new PessoaAction(rep);
-	private Pessoa pessoa;
-        
-	
-	@PostConstruct
-	public void inicializarVariaveis(){
-		pessoa = new Pessoa();
-	}
+public class PessoaController implements Serializable {
 
-	public PessoaController() {
+    @EJB
+    private PessoaRepositorio rep;
+    
+    @Getter
+    @Setter
+    private Pessoa pessoa;
 
-	}
+    @Getter
+    @Setter
+    private boolean showList;
 
+    @Getter
+    @Setter
+    private boolean showForm;
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+    @PostConstruct
+    public void inicializarVariaveis() {
+        pessoa = new Pessoa();
+        showList = true;
+        showForm = false;
+    }
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
+    public PessoaController() {
 
-	
+    }
+
+    
+    public void changeToForm(){
+        showList = false;
+        showForm = true;
+    }
+    
+    public void changeToList(){
+        showList = true;
+        showForm = false;
+    }
+
     public void salvar() {
-        if (action.salvar(pessoa)) {
+        
+        try {
+
+            rep.save(pessoa);
+
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
 
             pessoa = new Pessoa();
-        
-        } else {
+
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deu erro", "Deu erro em tudo!"));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deu erro", "Deu erro em tudo!"));
         }
 
-    }
-	
-	public List<Pessoa> getPessoas() {
 
-		return rep.findAll();
-	}
+    }
+
+    public List<Pessoa> getPessoas() {
+
+        return rep.findAll();
+    }
 
 }

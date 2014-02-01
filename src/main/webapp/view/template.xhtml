@@ -17,12 +17,20 @@
 
         <div id="top">
             <p:menubar>
-                <p:submenu label="Pessoas" icon="ui-icon-document">
-                    <p:menuitem value="Listar" url="/view/pessoa/listaPessoa.mv"  />
-                    <p:menuitem value="Cadastrar" url="/view/pessoa/cadastroPessoa.mv" />
-                </p:submenu>
+                <p:menuitem value="Pessoas" url="/view/pessoa/index.mv"   />
+
             </p:menubar>
         </div>
+        
+        <p:ajaxStatus style="position: absolute; top: 30%; left: 40%;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage value="../../resources/images/ajax-loader.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
 
         <div id="content" class="center_content">
             <ui:insert name="content">Content</ui:insert>

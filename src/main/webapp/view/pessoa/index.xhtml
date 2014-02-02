@@ -53,7 +53,7 @@
                         </p:password>
                         <p:message for="senha" />
 
-
+                        <h:inputHidden id="id" value="#{mbPessoa.pessoa.id}" />
                         <p:outputLabel value="" />
                         <p:outputLabel value="" />
     <!--                                                    <p:commandButton value="Salvar" action="#{mbPessoa.salvar()}" process="@form"
@@ -85,7 +85,7 @@
 
                     <p:column headerText="Ações">
                         <h:form>
-                            <p:commandButton action="#{mbPessoa.open(pess.id)}" update=":conteudo" 
+                            <p:commandButton action="#{mbPessoa.open(pess)}" update=":conteudo" 
                                              icon="ui-icon-pencil" title="Editar"/>
                         </h:form>
                     </p:column>

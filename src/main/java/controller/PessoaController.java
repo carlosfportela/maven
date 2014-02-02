@@ -52,9 +52,9 @@ public class PessoaController implements Serializable {
         showForm = false;
     }
     
-    public void open(long id){
-        System.out.println("ID PASSADO: " + id);
-        pessoa = rep.find(id);
+    public void open(Pessoa pessoa){
+        System.out.println("ID PASSADO: " + pessoa.getId());
+        this.pessoa = pessoa;
         System.out.println(pessoa.getNome());
         changeToForm();
     }
@@ -63,13 +63,15 @@ public class PessoaController implements Serializable {
 
         try {
             if (!pessoa.getSenha().equals("")) {
-                
-                if(pessoa.getId() <= 0)
+                System.out.println("ID NO SAVE: " + pessoa.getId());
+                if(pessoa.getId() <= 0){
+                    System.out.println("foi no save!!");
                     rep.save(pessoa);
                 
-                else
+                }else{
+                    System.out.println("foi no update!!");
                     rep.update(pessoa);
-
+                }
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
 

@@ -22,15 +22,12 @@ public class PessoaController implements Serializable {
 
     @EJB
     private PessoaRepositorio rep;
-    
     @Getter
     @Setter
     private Pessoa pessoa;
-
     @Getter
     @Setter
     private boolean showList;
-
     @Getter
     @Setter
     private boolean showForm;
@@ -43,30 +40,42 @@ public class PessoaController implements Serializable {
     }
 
     public PessoaController() {
-
     }
 
-    
-    public void changeToForm(){
+    public void changeToForm() {
         showList = false;
         showForm = true;
     }
-    
-    public void changeToList(){
+
+    public void changeToList() {
         showList = true;
         showForm = false;
     }
+    
+    public void open(long id){
+        System.out.println("ID PASSADO: " + id);
+        pessoa = rep.find(id);
+        System.out.println(pessoa.getNome());
+        changeToForm();
+    }
 
     public void salvar() {
-        
+
         try {
+            if (!pessoa.getSenha().equals("")) {
+                
+                if(pessoa.getId() <= 0)
+                    rep.save(pessoa);
+                
+                else
+                    rep.update(pessoa);
 
-            rep.save(pessoa);
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
 
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Item cadastrado", "Item cadastrado no banco!"));
+                pessoa = new Pessoa();
 
-            pessoa = new Pessoa();
+            }
 
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -80,5 +89,4 @@ public class PessoaController implements Serializable {
 
         return rep.findAll();
     }
-
 }

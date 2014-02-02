@@ -82,6 +82,13 @@
                     <p:column headerText="Usuario">
                         <h:outputText value="#{pess.usuario}" />
                     </p:column>
+
+                    <p:column headerText="Ações">
+                        <h:form>
+                            <p:commandButton action="#{mbPessoa.open(pess.id)}" update=":conteudo" 
+                                             icon="ui-icon-pencil" title="Editar"/>
+                        </h:form>
+                    </p:column>
                 </p:dataTable>
             </p:panel>
 
